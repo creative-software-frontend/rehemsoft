@@ -1,95 +1,52 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Check, X } from 'lucide-react';
-import Button from './Button'; 
+import Button from './Button';
 
 const PricingCard = ({ plan, isYearly }) => {
-    const price = isYearly ? plan.yearlyPrice : plan.monthlyPrice;
-    const isPopular = plan.isPopular;
+  // Calculate price based on toggle
+  const price = isYearly ? plan.yearlyPrice : plan.monthlyPrice;
 
-    return (
-        <motion.div
-            whileHover={{ y: -10 }}
-            className={`
-                relative p-8 rounded-3xl border flex flex-col h-full transition-all duration-300
-                ${isPopular
-                    ? 'bg-brand-600 border-brand-600 text-white shadow-2xl shadow-brand-600/30 scale-105 z-10'
-                    : 'bg-white border-brand-100 text-gray-900 shadow-xl hover:border-brand-200'
-                }
-            `}
-        >
-            {/* Popular Badge */}
-            {isPopular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-800 text-white px-4 py-1 rounded-full text-sm font-bold shadow-sm whitespace-nowrap">
-                    Most Popular
-                </div>
-            )}
+  return (
+    <div className="bg-white rounded-3xl p-8 md:p-10 border-2 border-pink-100 shadow-xl relative flex flex-col min-h-[550px] h-full">
+      {/* Popular Badge */}
+      <div className="absolute top-0 right-0 bg-[#db2777] text-white px-8 py-2 rounded-bl-3xl font-bold text-sm">
+        Premium
+      </div>
 
-            {/* Header */}
-            <div className="mb-6">
-                <h3 className={`text-xl font-bold mb-2 ${isPopular ? 'text-white' : 'text-gray-900'}`}>
-                    {plan.name}
-                </h3>
-                <p className={`text-sm ${isPopular ? 'text-brand-100' : 'text-gray-500'}`}>
-                    {plan.desc}
-                </p>
-            </div>
+      <div className="mb-6">
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+        <p className="text-gray-500 text-sm">{plan.description}</p>
+      </div>
 
-            {/* Price */}
-            <div className="mb-2 flex items-baseline">
-                <span className="text-4xl font-extrabold tracking-tight">
-                    ${price}
-                </span>
-                <span className={`ml-2 text-sm font-medium ${isPopular ? 'text-brand-100' : 'text-gray-400'}`}>
-                    / month
-                </span>
-            </div>
+      <div className="flex items-baseline gap-1 mb-8">
+        <span className="text-5xl font-extrabold text-gray-900">${price}</span>
+        <span className="text-gray-500 font-medium">/ {isYearly ? 'month (yearly)' : 'month'}</span>
+      </div>
 
-            {/* Button Section - WITH FIXED '!important' STYLES */}
-            <div className="mb-8 mt-6">
-                <Button 
-                    className={`w-full py-4 text-lg font-bold rounded-full transition-all shadow-xl ${
-                    isPopular 
-                        // Added '!' to force White Background and Pink Text
-                        ? '!bg-white !text-brand-600 hover:!bg-gray-50 shadow-black/20'     
-                        
-                        // Standard Card (Pink Button)
-                        : 'bg-brand-600 text-white hover:bg-brand-700 shadow-brand-200'  
-                    }`}
-                >
-                    Choose Plan
-                </Button>
-            </div>
+      {/* Feature List */}
+      <div className="space-y-4 mb-10">
+        <p className="font-bold text-gray-800 text-xs uppercase tracking-widest">Included Features</p>
+        <ul className="grid grid-cols-1  gap-y-3 gap-x-4">
+          {plan.features.map((feature, index) => (
+            <li key={index} className="flex items-center gap-3 text-gray-600 text-sm">
+              <div className="shrink-0 bg-pink-50 text-[#db2777] p-1 rounded-full">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </div>
 
-            {/* Features List */}
-            <ul className="space-y-4 mb-4 flex-1">
-                {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start">
-                        <Check
-                            size={18}
-                            className={`mr-3 shrink-0 mt-0.5 ${isPopular ? 'text-brand-200' : 'text-brand-600'}`}
-                        />
-                        <span className={`text-sm ${isPopular ? 'text-brand-50' : 'text-gray-600'}`}>
-                            {feature}
-                        </span>
-                    </li>
-                ))}
-
-                {/* Not Included Items (Faded) */}
-                {plan.notIncluded && plan.notIncluded.map((feature, i) => (
-                    <li key={`ni-${i}`} className="flex items-start opacity-50">
-                        <X
-                            size={18}
-                            className={`mr-3 shrink-0 mt-0.5 ${isPopular ? 'text-brand-200' : 'text-gray-400'}`}
-                        />
-                        <span className={`text-sm ${isPopular ? 'text-brand-100' : 'text-gray-500'}`}>
-                            {feature}
-                        </span>
-                    </li>
-                ))}
-            </ul>
-        </motion.div>
-    );
+      {/* FIX: mt-auto pushes the button to the absolute bottom of the card container */}
+      <div className="mt-auto">
+        <Button className="w-full py-6 text-lg font-bold shadow-lg shadow-pink-100">
+          Order Now
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default PricingCard;
