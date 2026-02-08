@@ -20,7 +20,7 @@ const FEATURE_IMAGES = [
 
 const FeaturesSection = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-brand-50">
+    <section className="py-20 bg-gradient-to-b from-white to-brand-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 ">
         
   
