@@ -15,6 +15,7 @@ import FundingSection from './components/sections/FundingSection';
 
 import Home from './pages/Home';
 import MainLayout from './layouts/MainLayout';
+import Affiliate from './pages/Affiliate';
 
 
 // Define the Routes
@@ -49,9 +50,7 @@ const router = createBrowserRouter([
       {
         path: "affiliate",
         element: (
-          <div className="flex items-center justify-center h-[60vh]">
-            <h1 className="text-4xl font-bold text-pink-600">Affiliate Program Coming Soon</h1>
-          </div>
+          <Affiliate />
         ),
       },
       // Login and Signup routes removed
